@@ -8,6 +8,8 @@ var usedGuessingwWords = [];
 var wordToMatch;
 var numGuess = 7;
 var wins = 0;
+
+// when pause is ture, function will stop displaying letter pressed by user
 var pause = false; 
 
 
@@ -87,7 +89,7 @@ function updateDisplay () {
 // when user pressed a key, function will trigger event
 document.onkeydown = function(event) {
 
-  // if user entered a letter and game is not pause
+  // if user entered a letter
   if (isLetter(event.key) && pause === false) {
 
   // set letter to uppercase
@@ -105,12 +107,12 @@ var isLetter = function(ch){
 function checkForLetter(letter) {
   var foundLetter = false;
 
-
+// check if letter pressed matches with selected word
   for (var i=0; i < wordToMatch.length; i++) {
     if (letter === wordToMatch[i]) {
       guessingWord[i] = letter
       foundLetter = true
-
+      // if all letters are guessed correctly, increase win and add it to guessed list
       if (guessingWord.join("") === wordToMatch) {
         wins++
         usedGuessingwWords.push(wordToMatch)
@@ -121,13 +123,13 @@ function checkForLetter(letter) {
       }
     }
   }
-  
+
   if (foundLetter === false) {
     // Check if inccorrect guess is already on the list
     if (guessedLetters.includes(letter) === false) {
       // Add incorrect letter to guessed letter list
       guessedLetters.push(letter)
-      // Decrement the number of remaining guesses
+      // Decrease the number of remaining guesses
       numGuess--
     }
     if (numGuess === 0) {
